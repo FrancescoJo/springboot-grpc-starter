@@ -1,2 +1,3 @@
 # springboot-grpc-starter
-GRPC on Spring boot demo
+
+A small demo for demonstrating Grpc on Spring Boot.

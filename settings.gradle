@@ -1,0 +1,5 @@
+rootProject.name = 'springboot-grpc-starter'
+
+include ":lib",
+        ":demo-hello-server",
+        ":demo-hello-client"

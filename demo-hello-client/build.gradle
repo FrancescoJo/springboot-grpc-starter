@@ -1,0 +1,57 @@
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: "kotlin"
+apply plugin: "com.google.protobuf"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+repositories {
+    jcenter()
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://jitpack.io" }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "$version_target_jvm"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "$version_target_jvm"
+}
+
+sourceSets {
+    main {
+        proto {
+            srcDir "src/main/proto"
+        }
+    }
+    test {
+        proto {
+            srcDir "src/test/proto"
+        }
+    }
+}
+
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:$version_protobuf" }
+    plugins {
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:$version_grpc" }
+    }
+    generateProtoTasks {
+        all()*.plugins { grpc {} }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+
+    implementation "javax.inject:javax.inject:1"
+
+    implementation "io.grpc:grpc-netty-shaded:$version_grpc"
+    implementation "io.grpc:grpc-protobuf:$version_grpc"
+    implementation "io.grpc:grpc-stub:$version_grpc"
+}

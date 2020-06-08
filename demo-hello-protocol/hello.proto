@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.github.fj.springGrpc.protocol.hello";
+option java_outer_classname = "HelloServiceProto";
+option objc_class_prefix = "GRPC";
+
+package com.github.fj.springGrpc.protocol.hello;
+
+// Simple Hello Service.
+service HelloService {
+   rpc greet (HelloRequest) returns (HelloResponse) {}
+}
+
+// Simple request: Hello
+message HelloRequest {
+   string name = 1;
+}
+
+// Simple response: Hello
+message HelloResponse {
+   string message = 1;
+}

@@ -1,0 +1,48 @@
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: "kotlin"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+repositories {
+    jcenter()
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://jitpack.io" }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "$version_target_jvm"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "$version_target_jvm"
+}
+
+jar {
+    enabled = true
+}
+
+bootJar {
+    enabled = false
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+
+    implementation "javax.inject:javax.inject:1"
+
+    implementation "org.springframework.boot:spring-boot-starter:$version_springBoot"
+    implementation "io.grpc:grpc-netty-shaded:$version_grpc"
+    implementation "io.grpc:grpc-protobuf:$version_grpc"
+    implementation "io.grpc:grpc-stub:$version_grpc"
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework.boot:spring-boot-autoconfigure-processor"
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+}
